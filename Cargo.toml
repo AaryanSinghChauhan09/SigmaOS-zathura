@@ -1,0 +1,8 @@
+[package]
+name = "sigmaos_zathura"
+version = "0.1.0"
+edition = "2021"
+
+[lib]
+name = "sigmaos_zathura"
+path = "src/lib.rs"
