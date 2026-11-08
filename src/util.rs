@@ -1,4 +1,4 @@
-//! zathura model — GTK document viewer.
+//! Utility model for zathura (legacy compat).
 
 #[derive(Debug, Clone)]
 pub struct Document {
@@ -30,16 +30,14 @@ impl Model {
         id
     }
 
-    pub fn next_page(&mut self, id: &str) -> bool {
-        if let Some(d) = self.documents.iter_mut().find(|d| d.id == id) {
-            if d.current_page < d.pages { d.current_page += 1; true } else { false }
-        } else { false }
-    }
-
-    pub fn prev_page(&mut self, id: &str) -> bool {
-        if let Some(d) = self.documents.iter_mut().find(|d| d.id == id) {
-            if d.current_page > 1 { d.current_page -= 1; true } else { false }
-        } else { false }
+    pub fn goto(&mut self, id: &str, page: u32) -> bool {
+        if let Some(doc) = self.documents.iter_mut().find(|d| d.id == id) {
+            if page <= doc.pages {
+                doc.current_page = page;
+                return true;
+            }
+        }
+        false
     }
 
     pub fn list(&self) -> &[Document] { &self.documents }
@@ -49,10 +47,9 @@ impl Model {
 mod tests {
     use super::*;
     #[test]
-    fn document_pages() {
-        let mut z = Model::new();
-        let id = z.open("/tmp/test.pdf", "Test", 10);
-        assert!(z.next_page(&id));
-        assert!(z.prev_page(&id));
+    fn legacy_model() {
+        let mut m = Model::new();
+        let id = m.open("/a.pdf", "A", 10);
+        assert!(m.goto(&id, 5));
     }
 }
