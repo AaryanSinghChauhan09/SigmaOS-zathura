@@ -1,8 +1,15 @@
 [package]
-name = "sigmaos_zathura"
+name = "SigmaOS-zathura"
 version = "0.1.0"
 edition = "2021"
+license = "Apache-2.0"
+description = "SigmaOS sigmaos_zathura component"
 
 [lib]
 name = "sigmaos_zathura"
 path = "src/lib.rs"
+
+[dependencies]
+thiserror = "1"
+
+[dev-dependencies]
